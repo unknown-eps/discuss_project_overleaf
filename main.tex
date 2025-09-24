@@ -16,7 +16,7 @@
 \usepackage{hyperref}   % Hyperlinks
 \usepackage{cleveref}   % Smart cross-referencing
 \usepackage{dirtree}
-
+\usepackage{float} 
 % Page setup
 \geometry{margin=1in}
 \setlength{\parindent}{0pt}
@@ -107,7 +107,77 @@ Select ensemble with best median performance\;
 \\[5pt] % This adds a vertical space of 5 points after the table.
 Note: Values slightly different from the ones reported in ppt as I directly took avg in pandas.
 \end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\linewidth]{plots/plots_for_median_strategy_using_only_train_energy.png}
+    \caption{Median strategy for combination using energy mae as perf measure.}
+    \label{fig:placeholder}
+\end{figure}
+\newpage
+\section{Model Selection via Validation Set of 500 unseen examples}
+Each ensemble was evaluated on the validation set and the model with lowest validation loss was selected for each seed. To ensure a fair comparison \textbf{vanilla} models were also evaluated across their hyperparameters on validation set.
+\begin{table}[htbp]
+\centering
+\small
+\caption{Energy and Force MAE (mean $\pm$ std) for different numbers of examples.}
+\begin{tabular}{@{}lcccc@{}}
+\hline
+\textbf{num\_ex} & \textbf{NEAL Energy} & \textbf{Vanilla Energy} & \textbf{NEAL Force} & \textbf{Vanilla Force} \\
+& \textbf{MAE} & \textbf{MAE} & \textbf{MAE} & \textbf{MAE} \\
+\hline
+5  & \textbf{243.72 $\pm$ 41.24} & 254.80 $\pm$ 39.75  & \textbf{281.81 $\pm$ 14.55} & 289.37 $\pm$ 16.08 \\
+10 & \textbf{166.55 $\pm$ 29.73} & 178.93 $\pm$ 20.54  & 232.83 $\pm$ 19.25 & \textbf{232.06 $\pm$ 14.46} \\
+20 & \textbf{99.75 $\pm$ 11.23}  & 131.58 $\pm$ 7.78   & 177.79 $\pm$ 2.83  & \textbf{173.97 $\pm$ 4.24} \\
+40 & \textbf{69.80 $\pm$ 3.80}   & 87.27 $\pm$ 16.58   & 140.74 $\pm$ 6.37  & \textbf{138.52 $\pm$ 2.94} \\
+\hline
+\end{tabular}
+\end{table}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\linewidth]{plots/validation on 500 examples using enerhy mae.png}
+    \caption{Using energy mae with a validation set of 500 examples.}
+    \label{fig:placeholder}
+\end{figure}
+
+Repeating the experiments using only force\_mae.
+\begin{table}[htbp]
+\centering
+\small
+\caption{Energy and Force MAE (mean $\pm$ std) for different numbers of examples.}
+\begin{tabular}{@{}lcccc@{}}
+\hline
+\textbf{num\_ex} & \textbf{NEAL Energy} & \textbf{Vanilla Energy} & \textbf{NEAL Force} & \textbf{Vanilla Force} \\
+& \textbf{MAE} & \textbf{MAE} & \textbf{MAE} & \textbf{MAE} \\
+\hline
+5  & \textbf{252.82 $\pm$ 41.68} & 254.81 $\pm$ 39.76 & \textbf{280.94 $\pm$ 14.57} & 289.37 $\pm$ 16.08 \\
+10 & \textbf{173.87 $\pm$ 34.88} & 180.64 $\pm$ 20.52 & \textbf{221.50 $\pm$ 10.83} & 225.99 $\pm$ 6.40 \\
+20 & \textbf{122.49 $\pm$ 17.06} & 131.60 $\pm$ 7.77  & \textbf{172.41 $\pm$ 3.43}  & 173.97 $\pm$ 4.24 \\
+40 & \textbf{81.05 $\pm$ 14.19}  & 87.26 $\pm$ 16.60  & \textbf{137.20 $\pm$ 3.06}  & 138.52 $\pm$ 2.94 \\
+\hline
+\end{tabular}
+\end{table}
 
 
+\newpage
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{plots/Validation using 500 examples using force mae only .png}
+    \caption{Using force mae of 500 examples}
+    \label{fig:placeholder}
+\end{figure}
+
+\section{Ensemble Selection Problem}
+The main problem of quantifying the performance on a problem can be broken in two steps
+\begin{enumerate}
+    \item Identify the performance of each of the 5 models in ensemble using it's cross-validation set which it has not seen in training. 
+    \item Evaluating a model on it's cross-validation set gives \textbf{2 scalars} \textbf{energy\_mae} and \textbf{force\_mae}. 
+\item We aim to find the optimal scalars $\mathbf{\lambda_e}$ and $\mathbf{\lambda_f}$ such that their weighted combination
+\begin{equation}
+    \mathbf{\lambda_e \cdot E_{\text{mae}} + \lambda_f \cdot F_{\text{mae} }}
+\end{equation}
+provides the best estimate of overall model performance.
+\item We will get one value for each model and the goal is to combine them. Here we have multiple choices like median, mean+std, mean-std, mean/std etc.
+\end{enumerate}
+\section{Spearman Correlation}
 
 \end{document}
