@@ -1,0 +1,172 @@
+\documentclass[12pt]{article}
+
+% Essential packages for mathematics
+\usepackage{amsmath}    % Advanced math environments
+\usepackage{amssymb}    % Additional math symbols
+\usepackage{amsthm}     % Theorem environments
+\usepackage{mathtools}  % Extensions to amsmath
+
+% Algorithm packages
+\usepackage[ruled,vlined]{algorithm2e}  % Popular algorithm package
+% Alternative: \usepackage{algorithm,algpseudocode} % For algorithmicx
+
+% Other useful packages
+\usepackage{graphicx}   % For including figures
+\usepackage{geometry}   % Page layout
+\usepackage{hyperref}   % Hyperlinks
+\usepackage{cleveref}   % Smart cross-referencing
+
+% Page setup
+\geometry{margin=1in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Custom math operators
+\DeclareMathOperator{\argmax}{arg\,max}
+\DeclareMathOperator{\argmin}{arg\,min}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+% Algorithm2e settings
+\SetAlgoNlRelativeSize{0}  % Line numbers same size as text
+\SetAlgoNoLine             % Remove vertical lines (comment to keep them)
+\DontPrintSemicolon        % Don't print semicolons at end of lines
+
+\title{Mathematics and Algorithms Template}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Mathematical Preliminaries}
+
+\subsection{Theorems and Proofs}
+
+\begin{theorem}[Pythagorean Theorem]
+In a right triangle with sides $a$, $b$, and hypotenuse $c$:
+\[
+a^2 + b^2 = c^2
+\]
+\end{theorem}
+
+\begin{proof}
+Consider a right triangle with legs of length $a$ and $b$, and hypotenuse $c$. 
+By the definition of Euclidean distance in $\mathbb{R}^2$, we have the result.
+\end{proof}
+
+\begin{definition}[Convex Function]
+A function $f: \mathbb{R}^n \to \mathbb{R}$ is convex if for all 
+$\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$ and $\lambda \in [0,1]$:
+\[
+f(\lambda \mathbf{x} + (1-\lambda) \mathbf{y}) \leq \lambda f(\mathbf{x}) + (1-\lambda) f(\mathbf{y})
+\]
+\end{definition}
+
+\subsection{Mathematical Notation Examples}
+
+Common mathematical constructs:
+
+\item Sets: $\mathbb{N}, \mathbb{Z}, \mathbb{Q}, \mathbb{R}, \mathbb{C}$
+    \item Vectors and matrices: $\mathbf{x} \in \mathbb{R}^n$, $\mathbf{A} \in \mathbb{R}^{m \times n}$
+    \item Expectations: $\E[X] = \int_{-\infty}^{\infty} x f_X(x) \, dx$
+    \item Optimization: $\min_{\mathbf{x} \in \mathcal{X}} f(\mathbf{x})$
+    \item Limits: $\lim_{n \to \infty} \frac{1}{n} \sum_{i=1}^n X_i = \E[X]$
+
+Advanced math environments:
+
+\begin{align}
+    \nabla f(\mathbf{x}) &= \begin{bmatrix}
+        \frac{\partial f}{\partial x_1} \\
+        \frac{\partial f}{\partial x_2} \\
+        \vdots \\
+        \frac{\partial f}{\partial x_n}
+    \end{bmatrix} \\
+    H_f(\mathbf{x}) &= \begin{bmatrix}
+        \frac{\partial^2 f}{\partial x_1^2} & \cdots & \frac{\partial^2 f}{\partial x_1 \partial x_n} \\
+        \vdots & \ddots & \vdots \\
+        \frac{\partial^2 f}{\partial x_n \partial x_1} & \cdots & \frac{\partial^2 f}{\partial x_n^2}
+    \end{bmatrix}
+\end{align}
+
+\section{Algorithms}
+
+\subsection{Algorithm Example: Gradient Descent}
+
+\begin{algorithm}[H]
+\caption{Gradient Descent}\label{alg:gradient_descent}
+\KwIn{Initial point $\mathbf{x}^{(0)}$, step size $\alpha > 0$, tolerance $\epsilon > 0$}
+\KwOut{Approximate minimizer $\mathbf{x}^*$}
+$\mathbf{x} \gets \mathbf{x}^{(0)}$\;
+\While{$\|\nabla f(\mathbf{x})\|_2 > \epsilon$}{
+    $\mathbf{x} \gets \mathbf{x} - \alpha \nabla f(\mathbf{x})$\;
+}
+\Return $\mathbf{x}$\;
+\end{algorithm}
+
+\subsection{Algorithm Example: Binary Search}
+
+\begin{algorithm}[H]
+\caption{Binary Search}\label{alg:binary_search}
+\KwIn{Sorted array $A[1..n]$, target value $t$}
+\KwOut{Index of $t$ in $A$, or $-1$ if not found}
+$low \gets 1$\;
+$high \gets n$\;
+\While{$low \leq high$}{
+    $mid \gets \lfloor (low + high) / 2 \rfloor$\;
+    \uIf{$A[mid] = t$}{
+        \Return $mid$\;
+    }
+    \uElseIf{$A[mid] < t$}{
+        $low \gets mid + 1$\;
+    }
+    \Else{
+        $high \gets mid - 1$\;
+    }
+}
+\Return $-1$\;
+\end{algorithm}
+
+\section{Complexity Analysis}
+
+For \cref{alg:binary_search}, the time complexity is $O(\log n)$ because:
+\item Each iteration reduces the search space by half
+    \item After $k$ iterations, the search space size is $n/2^k$
+    \item Algorithm terminates when $n/2^k \leq 1 \implies k \geq \log_2 n$
+
+The space complexity is $O(1)$ as it uses only a constant amount of extra space.
+
+\section{Mathematical Proofs in Algorithms}
+
+\begin{lemma}
+Binary search correctly finds the target element if it exists in the array.
+\end{lemma}
+
+\begin{proof}
+We use loop invariant: at the start of each iteration, if $t$ exists in $A$, 
+then it must be in the subarray $A[low..high]$.
+
+\textbf{Initialization:} Before the first iteration, $low = 1$ and $high = n$, 
+so the invariant holds trivially.
+
+\textbf{Maintenance:} If $A[mid] \neq t$, we eliminate half the array that 
+cannot contain $t$ due to the sorted property, maintaining the invariant.
+
+\textbf{Termination:} When the loop terminates, either we found $t$ and returned, 
+or $low > high$ meaning the subarray is empty, so $t$ is not present.
+\end{proof}
+
+\end{document}

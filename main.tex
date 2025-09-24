@@ -1,0 +1,57 @@
+\documentclass[12pt]{article}
+
+% Essential packages for mathematics
+\usepackage{amsmath}    % Advanced math environments
+\usepackage{amssymb}    % Additional math symbols
+\usepackage{amsthm}     % Theorem environments
+\usepackage{mathtools}  % Extensions to amsmath
+
+% Algorithm packages
+\usepackage[ruled,vlined]{algorithm2e}  % Popular algorithm package
+% Alternative: \usepackage{algorithm,algpseudocode} % For algorithmicx
+
+% Other useful packages
+\usepackage{graphicx}   % For including figures
+\usepackage{geometry}   % Page layout
+\usepackage{hyperref}   % Hyperlinks
+\usepackage{cleveref}   % Smart cross-referencing
+
+% Page setup
+\geometry{margin=1in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Custom math operators
+\DeclareMathOperator{\argmax}{arg\,max}
+\DeclareMathOperator{\argmin}{arg\,min}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+% Algorithm2e settings
+\SetAlgoNlRelativeSize{0}  % Line numbers same size as text
+\SetAlgoNoLine             % Remove vertical lines (comment to keep them)
+\DontPrintSemicolon        % Don't print semicolons at end of lines
+
+\title{Discussion on Project}
+\author{Harshit Rawat}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+
+\end{document}
