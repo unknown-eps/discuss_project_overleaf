@@ -89,6 +89,24 @@ Our project can be understood with the following structure:
 }
 Select ensemble with best median performance\;
 \end{algorithm}
+\begin{table}[htbp]
+\centering
+\small
+\caption{Energy and Force MAE (mean $\pm$ std) for different numbers of examples.}
+\begin{tabular}{@{}lcccc@{}}
+\hline
+\textbf{num\_ex} & \textbf{NEAL Energy} & \textbf{Vanilla Energy} & \textbf{NEAL Force} & \textbf{Vanilla Force} \\
+& \textbf{MAE} & \textbf{MAE} & \textbf{MAE} & \textbf{MAE} \\
+\hline
+5  & 343.26 $\pm$ 100.34 & \textbf{288.08 $\pm$ 51.77}  & 364.96 $\pm$ 93.60  & \textbf{313.23 $\pm$ 22.08} \\
+10 & 205.71 $\pm$ 23.73  & \textbf{203.09 $\pm$ 32.34}  & \textbf{242.51 $\pm$ 20.24}  & 247.44 $\pm$ 27.42 \\
+20 & \textbf{108.13 $\pm$ 15.15}  & 131.57 $\pm$ 7.77   & 175.42 $\pm$ 4.13   & \textbf{173.97 $\pm$ 4.24}  \\
+40 & \textbf{75.56  $\pm$ 5.01}   & 87.26  $\pm$ 16.59  & 142.85 $\pm$ 7.09   & \textbf{138.52 $\pm$ 2.94}  \\
+\hline
+\end{tabular}
+\\[5pt] % This adds a vertical space of 5 points after the table.
+Note: Values slightly different from the ones reported in ppt as I directly took avg in pandas.
+\end{table}
 
 
 
