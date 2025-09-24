@@ -73,9 +73,22 @@ Our project can be understood with the following structure:
 }
 
 
-
+\newpage
 \section{Preliminary Model Selection Framework and Results}
+\begin{algorithm}[htbp]
+\caption{Median Based Algorithm for Model Selection}\label{alg:Median algorithm}
+\KwIn{Set of ensembles $\mathcal{E}$, each ensemble contains 5 models}
+\KwOut{Best Ensemble}
 
+\ForEach{ensemble $E \in \mathcal{E}$}{
+    \ForEach{model $m \in E$}{
+        Evaluate $m$ \textbf{energy\_mae} of model on it's   \textbf{personal} validation set\;
+        This will be used as \textbf{model performance metric}. \;
+    }
+    Compute median of performance of models in $E$\;
+}
+Select ensemble with best median performance\;
+\end{algorithm}
 
 
 
