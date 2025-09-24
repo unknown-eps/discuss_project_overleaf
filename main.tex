@@ -15,6 +15,7 @@
 \usepackage{geometry}   % Page layout
 \usepackage{hyperref}   % Hyperlinks
 \usepackage{cleveref}   % Smart cross-referencing
+\usepackage{dirtree}
 
 % Page setup
 \geometry{margin=1in}
@@ -51,6 +52,30 @@
 \begin{document}
 
 \maketitle
+\section{Preliminary observations}
+Our project can be understood with the following structure:
+\medskip
+\dirtree{%
+.1 Molecule name 5(aspirin trained using 5 examples).
+.2 random\_seed\_42.
+.3 lr\_10(Ensemble).
+.4 model\_1.
+.4 model\_2.
+.4 model\_3.
+.4 model\_4.
+.4 model\_5.
+.3 lr\_20.
+.4 model\_1.
+.4 model\_2.
+.4 \ldots .
+.2 random\_seed\_52.
+.1 Molecule name 10(aspirin trained using 10 examples).
+}
+
+
+
+\section{Preliminary Model Selection Framework and Results}
+
 
 
 
