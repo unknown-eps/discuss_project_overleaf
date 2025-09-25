@@ -178,6 +178,67 @@ The main problem of quantifying the performance on a problem can be broken in tw
 provides the best estimate of overall model performance.
 \item We will get one value for each model and the goal is to combine them. Here we have multiple choices like median, mean+std, mean-std, mean/std etc.
 \end{enumerate}
+\newpage
 \section{Spearman Correlation}
+Calculation of Spearman Correlation for a complete strategy eg ($\lambda_e=1$ $\lambda_f=0$ , median for aggregation for a fixed budget num\_eg = 10 )
+\begin{enumerate}
+    \item For each ensemble evaluate it on a validation set of 500 examples and \textbf{use energy mae} as the \textbf{true estimate} of the performance.
+    \item \textbf{Note} that as we are focusing of energy the true estimate will never change. That is for whatever values of $\lambda_e$ and $\lambda_f$ our target remains same.
+    \item For each ensemble estimate it's performance using spearman correlation.
+    \item Calculate spearman correlation coefficient using these two values.
+    \item \textbf{Note that we do not treat different random seeds differently.}
+\end{enumerate}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\linewidth]{plots/spearman coorelation using energy.png}
+    \caption{Spearman Correlation using Energy only }
+    \label{fig:placeholder}
+\end{figure}
+\newpage
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\linewidth]{plots/Spearman coreelation using force + energy use all seeds.png}
+    \caption{Spearman correlation using energy mae + force mae.}
+    \label{fig:placeholder}
+\end{figure}
+We observe that \textbf{mean} is generally the best and force + energy has higher correlation.
+\begin{table}[htbp]
+\centering
+\small
+\caption{Energy and Force MAE (mean $\pm$ std) force plus energy used for model selection .}
+\begin{tabular}{@{}lcccc@{}}
+\hline
+\textbf{num\_ex} & \textbf{NEAL Energy MAE} & \textbf{Vanilla Energy MAE} & \textbf{NEAL Force MAE} & \textbf{Vanilla Force MAE} \\
+\hline
+5  & 263.19 $\pm$ 35.52 & \textbf{254.81 $\pm$ 39.76} & 294.66 $\pm$ 19.63 & \textbf{289.37 $\pm$ 16.08} \\
+10 & \textbf{174.07 $\pm$ 26.55} & 180.64 $\pm$ 20.52 & \textbf{223.58 $\pm$ 9.99} & 225.99 $\pm$ 6.40 \\
+20 & \textbf{111.29 $\pm$ 18.47} & 131.59 $\pm$ 7.77  & 178.66 $\pm$ 7.00  & \textbf{173.97 $\pm$ 4.24} \\
+40 & \textbf{72.71 $\pm$ 5.87}   & 87.27 $\pm$ 16.59  & 138.86 $\pm$ 3.27  & \textbf{138.52 $\pm$ 2.94} \\
+50 & \textbf{64.62 $\pm$ 5.16} & 77.38 $\pm$ 3.64     & \textbf{124.11 $\pm$ 3.79} & 124.61 $\pm$ 3.93
+\\
+\hline
+\end{tabular}
+\end{table}
 
+\newpage
+\section{Using method suggested by Rushikesh}
+Method: For each budget,strategy and seed calculate spearman correlation. Then avg across seeds to get the result for a strategy at this budget.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\linewidth]{plots/spearman correlation avg.png}
+    \caption{Spearman Correlation using energy mae for different strategies averaged across seeds.}
+    \label{fig:placeholder}
+\end{figure}
+\newpage
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\linewidth]{plots/spearman correlation using energy mae + force mae averaged across 5 seeds.png}
+    \caption{Spearman correlation using energy and force averaged across 5 seeds.}
+    \label{fig:placeholder}
+\end{figure}
+
+
+
+    
 \end{document}
