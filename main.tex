@@ -216,6 +216,9 @@ We observe that \textbf{mean} is generally the best and force + energy has highe
 40 & \textbf{72.71 $\pm$ 5.87}   & 87.27 $\pm$ 16.59  & 138.86 $\pm$ 3.27  & \textbf{138.52 $\pm$ 2.94} \\
 50 & \textbf{64.62 $\pm$ 5.16} & 77.38 $\pm$ 3.64     & \textbf{124.11 $\pm$ 3.79} & 124.61 $\pm$ 3.93
 \\
+60 & \textbf{56.7 $\pm$ 5.3} & 72.00 $\pm$ 9.3     & 118.00 $\pm$ 0.91 & \textbf{117.97 $\pm$ 3.22}\\
+120 & \textbf{38.35 $\pm$ 2.64} & 54.73 $\pm$ 15.06     & 88.15 $\pm$ 1.34 & \textbf{87.86 $\pm$ 0.62}
+\\
 \hline
 \end{tabular}
 \end{table}
@@ -231,14 +234,69 @@ Method: For each budget,strategy and seed calculate spearman correlation. Then a
     \label{fig:placeholder}
 \end{figure}
 \newpage
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{plots/spearman correlation using energy mae + force mae averaged across 5 seeds.png}
     \caption{Spearman correlation using energy and force averaged across 5 seeds.}
     \label{fig:placeholder}
 \end{figure}
+\section{Nodal Schnet Results}
+\subsection{Using only 1st interaction layer and energy latent}
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|cc|cc}
+\hline
+\textbf{num\_examples} & \textbf{Energy (NeAL)} & \textbf{Energy (Vanilla)} & \textbf{Force (NeAL)} & \textbf{Force (Vanilla)} \\
+\hline
+5  & 281.67 $\pm$ 40.90 & \textbf{281.66 $\pm$ 55.97} & \textbf{317.17 $\pm$ 29.70} & 321.44 $\pm$ 28.19 \\
+10 & \textbf{188.44 $\pm$ 23.28} & 191.66 $\pm$ 9.81 & \textbf{242.95 $\pm$ 16.45} & 246.20 $\pm$ 16.29 \\
+20 & \textbf{120.85 $\pm$ 13.24} & 126.96 $\pm$ 14.91 & \textbf{173.66 $\pm$ 4.84} & 174.32 $\pm$ 4.32 \\
+40 & 78.27 $\pm$ 9.76 & \textbf{73.78 $\pm$ 4.20} & \textbf{135.53 $\pm$ 2.69} & 136.01 $\pm$ 1.91 \\
+\hline
+\end{tabular}
+\caption{Using guidance from only first Layer of interactions and energy latents. Mean $\pm$ std across 5 seeds.}
+\label{tab:neal_vanilla_results}
+\end{table}
+\newpage
+\section{Using only 3rd interaction latent and energy layer.}
+\begin{table}[htbp]
+\centering
+\caption{Energy and Force MAE ($\text{mean} \pm \text{std}$) for varying number of examples. The best (lowest) values for energy and force are highlighted separately.}
+\begin{tabular}{c|cc|cc}
+\hline
+\textbf{num\_ex} & \multicolumn{2}{c|}{\textbf{Energy MAE}} & \multicolumn{2}{c}{\textbf{Force MAE}} \\
+ & \textbf{Neal} & \textbf{Vanilla Nodal} & \textbf{Neal} & \textbf{Vanilla Nodal} \\
+\hline
+5   & \textbf{275.86 $\pm$ 27.12} & 281.65 $\pm$ 55.97 & \textbf{321.09 $\pm$ 17.85} & 321.44 $\pm$ 28.19 \\
+10  & \textbf{161.26 $\pm$ 13.31} & 191.66 $\pm$ 9.80  & \textbf{232.86 $\pm$ 8.46}  & 246.20 $\pm$ 16.29 \\
+20  & \textbf{97.69 $\pm$ 6.57}   & 126.94 $\pm$ 14.92 & \textbf{174.08 $\pm$ 5.09}  & 174.32 $\pm$ 4.32 \\
+40  & \textbf{67.75 $\pm$ 4.11}   & 73.77 $\pm$ 4.19   & \textbf{135.62 $\pm$ 1.26}  & 136.01 $\pm$ 1.91 \\
+50  & \textbf{58.10 $\pm$ 3.63}   & 62.00 $\pm$ 4.00   & \textbf{121.30 $\pm$ 1.35}  & 121.50 $\pm$ 0.74 \\
+60  & \textbf{51.20 $\pm$ 2.93}   & 56.70 $\pm$ 3.23   & \textbf{114.06 $\pm$ 1.38}  & 114.12 $\pm$ 1.10 \\
+120 & \textbf{34.08 $\pm$ 1.62}   & 38.24 $\pm$ 3.40   & \textbf{84.23 $\pm$ 1.10}   & 84.78 $\pm$ 0.67 \\
+\hline
+\end{tabular}
+\end{table}
+We have the following observations:
+\begin{enumerate}
+    \item Results similar to \textbf{MACE} convergence at \textbf{40}.
 
-
-
-    
+    \item  Nodal schnet neal consistently outperforms vanilla schnet-neal.
+\end{enumerate}
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{plots/comparsion vanilla schnet vs nodal schnet using only 3rd inetraction and energy.png}
+        \caption{Comparison of NEAL with NODAL and Vanilla SchNet results.}
+        \label{fig:comparison1}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{plots/comparison of gain in neal approach in the case of vanilla and nodal using the 3 r layer interaction enrgies and latents..png}
+        \caption{Comparison of NEAL gains with Vanilla and NODAL SchNet (3rd layer interactions only).}
+        \label{fig:comparison2}
+    \end{minipage}
+\end{figure}
 \end{document}
