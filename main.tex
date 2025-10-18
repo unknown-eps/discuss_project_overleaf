@@ -16,7 +16,8 @@
 \usepackage{hyperref}   % Hyperlinks
 \usepackage{cleveref}   % Smart cross-referencing
 \usepackage{dirtree}
-\usepackage{float} 
+\usepackage{float}
+\usepackage{multirow}
 % Page setup
 \geometry{margin=1in}
 \setlength{\parindent}{0pt}
@@ -258,7 +259,7 @@ Method: For each budget,strategy and seed calculate spearman correlation. Then a
 \label{tab:neal_vanilla_results}
 \end{table}
 \newpage
-\section{Using only 3rd interaction latent and energy layer.}
+\subsection{Using only 3rd interaction latent and energy layer.}
 \begin{table}[htbp]
 \centering
 \caption{Energy and Force MAE ($\text{mean} \pm \text{std}$) for varying number of examples. The best (lowest) values for energy and force are highlighted separately.}
@@ -299,4 +300,53 @@ We have the following observations:
         \label{fig:comparison2}
     \end{minipage}
 \end{figure}
+\newpage
+\subsection{Using only 2nd layer interaction latents and energies}
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|cc|cc}
+\hline
+\multirow{2}{*}{\textbf{num\_ex}} & \multicolumn{2}{c|}{\textbf{Energy MAE}} & \multicolumn{2}{c}{\textbf{Force MAE}} \\
+ & \textbf{Neal} & \textbf{Vanilla} & \textbf{Neal} & \textbf{Vanilla} \\
+\hline
+5  & \textbf{277.15 $\pm$ 54.76} & 281.67 $\pm$ 55.96 & 321.46 $\pm$ 19.70 & \textbf{321.44 $\pm$ 28.19} \\
+10 & \textbf{169.90 $\pm$ 20.80} & 191.67 $\pm$ 9.83 & \textbf{234.44 $\pm$ 5.73} & 246.20 $\pm$ 16.29 \\
+20 & \textbf{121.66 $\pm$ 8.26} & 126.97 $\pm$ 14.91 & 177.04 $\pm$ 10.78 & \textbf{174.32 $\pm$ 4.32} \\
+40 & \textbf{71.59 $\pm$ 3.19} & 73.78 $\pm$ 4.21 & \textbf{135.39 $\pm$ 2.18} & 136.01 $\pm$ 1.91 \\
+50 & 63.24 $\pm$ 5.12 & \textbf{62.00 $\pm$ 3.97} & 122.62 $\pm$ 4.14 & \textbf{121.50 $\pm$ 0.74} \\
+60 & \textbf{55.70 $\pm$ 3.64} & 56.70 $\pm$ 3.23 & 114.19 $\pm$ 1.73 & \textbf{114.12 $\pm$ 1.10} \\
+\hline
+\end{tabular}
+\caption{Mean $\pm$ standard deviation of energy and force MAE across when using second layer and second interaction latents.}
+\label{tab:energy_force_mae}
+\end{table}
+\subsection{Using all interaction layers concatenated and Mahalanobis distance for aligning nodal\_energy vector. }
+\begin{table}[h!]
+\centering
+\caption{Mean $\pm$ Std MAE for Energy and Force across different numbers of examples. Lowest per-row values (for Energy and Force separately) are highlighted in bold.}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|cc|cc}
+\hline
+\multirow{2}{*}{\textbf{Num Examples}} & \multicolumn{2}{c|}{\textbf{Energy MAE}} & \multicolumn{2}{c}{\textbf{Force MAE}} \\
+ & \textbf{Neal} & \textbf{Vanilla} & \textbf{Neal} & \textbf{Vanilla} \\
+\hline
+5   & 283.33 $\pm$ 50.12 & \textbf{281.65 $\pm$ 55.97} & 327.13 $\pm$ 25.12 & \textbf{321.44 $\pm$ 28.19} \\
+10  & \textbf{168.92 $\pm$ 18.20} & 191.67 $\pm$ 9.83  & \textbf{233.06 $\pm$ 8.49}  & 246.20 $\pm$ 16.29 \\
+20  & 127.29 $\pm$ 13.92 & \textbf{126.96 $\pm$ 14.92} & 176.10 $\pm$ 3.89  & \textbf{174.32 $\pm$ 4.32} \\
+40  & 89.09 $\pm$ 13.09  & \textbf{73.77 $\pm$ 4.22}   & \textbf{135.79 $\pm$ 1.91}  & 136.01 $\pm$ 1.91 \\
+50  & 74.35 $\pm$ 5.74   & \textbf{61.98 $\pm$ 3.99}   & \textbf{121.16 $\pm$ 2.20}  & 121.50 $\pm$ 0.74 \\
+60  & 70.43 $\pm$ 7.53   & \textbf{56.70 $\pm$ 3.22}   & 114.72 $\pm$ 1.58  & \textbf{114.12 $\pm$ 1.10} \\
+120 & 45.21 $\pm$ 3.26   & \textbf{38.26 $\pm$ 3.39}   & 86.05 $\pm$ 1.26  & \textbf{84.78 $\pm$ 0.67} \\
+\hline
+\end{tabular}
+\end{table}
+This method has poor performance. I am thinking of the following fixes
+\begin{enumerate}
+    \item Use only the last layer for finding prototypes. Heuristic:- Ideally the last interaction layer has captured all the information so does not need concatenation with previous layers. This makes it much easier to preserve variance via PCA.
+
+    \item Use PCA with a higher number of components.
+
+    \item Use L1 loss in neal instead of L2 loss to help the model adapt more smoothly.
+\end{enumerate}
+
 \end{document}
