@@ -348,5 +348,158 @@ This method has poor performance. I am thinking of the following fixes
 
     \item Use L1 loss in neal instead of L2 loss to help the model adapt more smoothly.
 \end{enumerate}
+\newpage
+\begin{table}[htbp]
+\centering
+\begin{tabular}{c|cc|cc}
+\hline
+\textbf{num\_examples} & \multicolumn{2}{c|}{\textbf{Energy MAE}} & \multicolumn{2}{c}{\textbf{Force MAE}} \\
+ & \textbf{Neal} & \textbf{Vanilla} & \textbf{Neal} & \textbf{Vanilla} \\
+\hline
+5   & 283.33 $\pm$ 35.86 & \textbf{281.60 $\pm$ 55.98} & 327.13 $\pm$ 21.17 & \textbf{321.44 $\pm$ 26.80} \\
+10  & \textbf{162.81 $\pm$ 22.59} & 190.27 $\pm$ 11.47 & \textbf{244.42 $\pm$ 13.91} & 251.03 $\pm$ 13.41 \\
+20  & \textbf{114.31 $\pm$ 6.99} & 123.55 $\pm$ 12.06 & 188.93 $\pm$ 9.77 & \textbf{178.85 $\pm$ 13.23} \\
+40  & 86.41 $\pm$ 10.36 & \textbf{73.76 $\pm$ 4.19} & 146.36 $\pm$ 12.90 & \textbf{136.01 $\pm$ 1.91} \\
+50  & 72.95 $\pm$ 4.65 & \textbf{62.02 $\pm$ 3.97} & 125.96 $\pm$ 6.85 & \textbf{121.50 $\pm$ 0.74} \\
+60  & 65.02 $\pm$ 3.83 & \textbf{56.71 $\pm$ 3.24} & 118.94 $\pm$ 4.99 & \textbf{114.12 $\pm$ 1.10} \\
+120 & 42.68 $\pm$ 2.51 & \textbf{38.24 $\pm$ 3.41} & 93.09 $\pm$ 8.03 & \textbf{84.78 $\pm$ 0.67} \\
+\hline
+\end{tabular}
+\caption{Comparison of energy and force MAE (mean $\pm$ std) across different training budgets. A full set of 500 configurations was used to decide the optimal hyper-parameters.}
+\label{tab:energy_force_mae}
+\end{table}
+This shows that model selection criterion is not the reason for degradation in performance.
+\subsection{Using all energy latents and only 3rd interaction latents.}
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|cc|cc}
+\hline
+\textbf{num\_examples} & \multicolumn{2}{c|}{\textbf{Energy MAE}} & \multicolumn{2}{c}{\textbf{Force MAE}} \\
+\cline{2-5}
+ & \textbf{NeaL} & \textbf{Vanilla} & \textbf{NeaL} & \textbf{Vanilla} \\
+\hline
+5   & \textbf{257.19 $\pm$ 76.33} & 281.64 $\pm$ 55.96 & \textbf{310.26 $\pm$ 19.96} & 321.44 $\pm$ 28.19 \\
+10  & \textbf{143.06 $\pm$ 18.21} & 191.67 $\pm$ 9.83  & \textbf{231.44 $\pm$ 5.52}  & 246.20 $\pm$ 16.29 \\
+20  & \textbf{96.88 $\pm$ 7.95}   & 126.96 $\pm$ 14.92 & 178.46 $\pm$ 1.91 & \textbf{174.32 $\pm$ 4.32} \\
+40  & \textbf{68.05 $\pm$ 4.67}   & 73.76 $\pm$ 4.23   & 136.47 $\pm$ 1.56 & \textbf{136.01 $\pm$ 1.91} \\
+50  & \textbf{60.96 $\pm$ 2.59}   & 61.98 $\pm$ 3.99   & 122.73 $\pm$ 2.96 & \textbf{121.50 $\pm$ 0.74} \\
+60  & \textbf{54.31 $\pm$ 3.08}   & 56.71 $\pm$ 3.21   & 115.16 $\pm$ 2.12 & \textbf{114.12 $\pm$ 1.10} \\
+120 & \textbf{36.24 $\pm$ 2.79}   & 38.24 $\pm$ 3.40   & 84.97 $\pm$ 1.61  & \textbf{84.78 $\pm$ 0.67} \\
+\hline
+\end{tabular}
+\caption{Mean $\pm$ std for energy and force MAE across different numbers of examples. 
+Bold indicates the smaller (better) value for each metric type.}
+\label{tab:neal_vanilla_mae}
+\end{table}
+\newpage
+\subsection{Mace with last interaction layers}
+We see that both the there is practically no difference in performance.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c p{3.2cm} p{3.2cm} p{3.5cm}}
+\hline
+\textbf{num\_ex} & \textbf{energy\_mae Last Layer (meV)} & \textbf{energy\_mae Rushikesh (meV)} & \textbf{force\_mae Last Layer (meV/\AA)} \\
+\hline
+5  & 49.11 $\pm$ 0.25 & \textbf{47.29 $\pm$ 2.61} & 93.84 $\pm$ 2.56 \\
+10 & \textbf{31.70 $\pm$ 1.69} & 31.98 $\pm$ 1.28 & 66.33 $\pm$ 3.80 \\
+20 & \textbf{22.63 $\pm$ 0.58} & 22.92 $\pm$ 1.86 & 50.32 $\pm$ 0.51 \\
+\hline
+\end{tabular}
+\caption{Comparison of using last interactions vs a concatenation Minimum energy means are highlighted.}
+\label{tab:energy_force_mae}
+\end{table} 
+
+\section{Using $||F||_2$ based alignment.}
+We use the same hyperparameter grid as used for the standard neal approach.
+\begin{table*}[h!]
+\centering
+\begin{tabular}{c|cc|cc}
+\hline
+\textbf{Num Examples} &
+\textbf{NEAL Energy} & \textbf{Vanilla Energy} &
+\textbf{NEAL Force} & \textbf{Vanilla Force} \\
+\hline
+
+5  &
+297.92 $\pm$ 41.17 &
+\textbf{281.66 $\pm$ 55.96} &
+330.01 $\pm$ 15.13 &
+\textbf{321.44 $\pm$ 28.19} \\
+
+10 &
+\textbf{166.24 $\pm$ 14.29} &
+191.69 $\pm$ 9.81 &
+\textbf{231.29 $\pm$ 11.75} &
+246.20 $\pm$ 16.29 \\
+
+20 &
+\textbf{110.80 $\pm$ 9.70} &
+126.96 $\pm$ 14.91 &
+\textbf{173.20 $\pm$ 5.59} &
+174.32 $\pm$ 4.32 \\
+
+40 &
+73.86 $\pm$ 5.57 &
+\textbf{73.76 $\pm$ 4.20} &
+\textbf{135.16 $\pm$ 1.97} &
+136.01 $\pm$ 1.91 \\
+
+50 &
+\textbf{60.36 $\pm$ 3.23} &
+62.00 $\pm$ 3.98 &
+\textbf{120.96 $\pm$ 1.81} &
+121.50 $\pm$ 0.74 \\
+
+60 &
+\textbf{52.19 $\pm$ 3.00} &
+56.71 $\pm$ 3.21 &
+\textbf{113.90 $\pm$ 1.66} &
+114.12 $\pm$ 1.10 \\
+
+120 &
+\textbf{36.56 $\pm$ 1.68} &
+38.23 $\pm$ 3.41 &
+\textbf{84.39 $\pm$ 1.26} &
+84.78 $\pm$ 0.67 \\
+\hline
+\end{tabular}
+\caption{Energy and force MAE (mean $\pm$ std) for force alignment fine tuning vs vanilla finetuning.}
+\end{table*}
+\\
+The improvement in Force MAE is only at budget of 10 examples but energy mae is decreasing as a result of applying this method. 
+\\
+\textbf{Can we combine the performance increases of both these methods?}
+
+\newpage
+\section{Combining force and energy based guidance.}
+\begin{table}[h]
+\centering
+\begin{tabular}{c|cc|cc}
+\hline
+\textbf{num\_examples} &
+\textbf{NEAL Energy} & \textbf{Vanilla Energy} &
+\textbf{NEAL Force} & \textbf{Vanilla Force} \\
+\hline
+
+5 &
+\textbf{280.43 $\pm$ 69.53} & 281.65 $\pm$ 55.98 &
+\textbf{312.91 $\pm$ 19.66} & 321.44 $\pm$ 28.19 \\
+
+10 &
+\textbf{142.15 $\pm$ 19.82} & 191.69 $\pm$ 9.80 &
+\textbf{228.38 $\pm$ 7.67} & 246.20 $\pm$ 16.29 \\
+
+20 &
+\textbf{91.18 $\pm$ 11.30} & 126.94 $\pm$ 14.91 &
+175.99 $\pm$ 5.40 & \textbf{174.32 $\pm$ 4.32} \\
+
+40 &
+\textbf{66.51 $\pm$ 2.45} & 73.77 $\pm$ 4.19 &
+\textbf{135.68 $\pm$ 0.96} & 136.01 $\pm$ 1.91 \\
+\hline
+\end{tabular}
+\caption{Energy and force comparison using both energy and force alignment in the ratio 1:1 .}
+
+\end{table}
 
 \end{document}
