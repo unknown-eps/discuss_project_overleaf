@@ -499,7 +499,50 @@ The improvement in Force MAE is only at budget of 10 examples but energy mae is 
 \hline
 \end{tabular}
 \caption{Energy and force comparison using both energy and force alignment in the ratio 1:1 .}
-
 \end{table}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{plots/comparison of force+energy alignmnet 1:1 with only energy alignment.png}
+    \caption{Comparison of energy mae across different finetuning strategies.}
+    \label{fig:placeholder}
+\end{figure}
+
+\newpage
+\begin{table*}[htbp]
+\centering
+\begin{tabular}{c|cc|cc}
+\hline
+\textbf{Num Examples} &
+\textbf{NEAL Energy} & \textbf{Vanilla Energy} &
+\textbf{NEAL Force} & \textbf{Vanilla Force} \\
+\hline
+
+5  &
+\textbf{277.12 $\pm$ 76.56} &
+281.65 $\pm$ 55.96 &
+\textbf{305.53 $\pm$ 14.13} &
+321.44 $\pm$ 28.19 \\
+
+10 &
+\textbf{141.06 $\pm$ 19.25} &
+191.66 $\pm$ 9.82 &
+\textbf{229.02 $\pm$ 9.13} &
+246.20 $\pm$ 16.29 \\
+
+20 &
+\textbf{97.50 $\pm$ 10.36} &
+126.96 $\pm$ 14.91 &
+\textbf{173.45 $\pm$ 2.68} &
+174.32 $\pm$ 4.32 \\
+
+40 &
+\textbf{69.82 $\pm$ 3.61} &
+73.77 $\pm$ 4.22 &
+137.04 $\pm$ 2.40 &
+\textbf{136.01 $\pm$ 1.91} \\
+\hline
+\end{tabular}
+\caption{Energy and force MAE (mean $\pm$ std) comparing NEAL vs vanilla finetuning energy and force alignment 1:10.}
+\end{table*}
 
 \end{document}
