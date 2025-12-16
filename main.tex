@@ -498,7 +498,7 @@ The improvement in Force MAE is only at budget of 10 examples but energy mae is 
 \textbf{135.68 $\pm$ 0.96} & 136.01 $\pm$ 1.91 \\
 \hline
 \end{tabular}
-\caption{Energy and force comparison using both energy and force alignment in the ratio 1:1 .}
+\caption{Energy and force comparison using both energy+force alignment in the ratio 1:1 .}
 \end{table}
 \begin{figure}[htbp]
     \centering
@@ -544,5 +544,221 @@ The improvement in Force MAE is only at budget of 10 examples but energy mae is 
 \end{tabular}
 \caption{Energy and force MAE (mean $\pm$ std) comparing NEAL vs vanilla finetuning energy and force alignment 1:10.}
 \end{table*}
+
+\begin{table*}[h!]
+\centering
+\begin{tabular}{c|cc|cc}
+\hline
+\textbf{Num Examples} &
+\textbf{NEAL Energy} & \textbf{Vanilla Energy} &
+\textbf{NEAL Force} & \textbf{Vanilla Force} \\
+\hline
+
+5 &
+\textbf{280.01 $\pm$ 69.27} &
+281.66 $\pm$ 55.97 &
+\textbf{312.95 $\pm$ 20.23} &
+321.44 $\pm$ 28.19 \\
+
+10 &
+\textbf{161.92 $\pm$ 24.93} &
+191.67 $\pm$ 9.82 &
+\textbf{243.57 $\pm$ 23.58} &
+246.20 $\pm$ 16.29 \\
+
+20 &
+\textbf{93.18 $\pm$ 7.38} &
+126.95 $\pm$ 14.91 &
+174.32 $\pm$ 4.32 &
+\textbf{175.42 $\pm$ 2.83} \\
+
+40 &
+\textbf{67.66 $\pm$ 2.99} &
+73.76 $\pm$ 4.19 &
+\textbf{136.01 $\pm$ 1.91} &
+136.92 $\pm$ 1.51 \\
+\hline
+\end{tabular}
+\caption{Energy and Force MAE (mean ± std) for energy and force alignment 10:1}
+\end{table*}
+
+
+% New section
+\newpage
+\section{Detecting OOD Alignmnets}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.3\linewidth]{plots/mahanabolis dsitribution for aspirin.png}
+    \caption{Distribution of Mahanabolis distances for atoms in aspirin.}
+    \label{fig:placeholder}
+\end{figure}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.3\linewidth]{plots/Distribution of Mahanabolis distances azobenzene.png}
+    \caption{Distribution of Mahanabolis distances for atoms in azobenzene.}
+    \label{fig:placeholder}
+\end{figure}
+
+
+\newpage
+
+
+
+\subsection{Aspirin}
+\begin{table*}[h!]
+\centering
+\begin{tabular}{c|cc|cc}
+\hline
+\textbf{Num Examples} &
+\textbf{NEAL Energy} & \textbf{Vanilla Energy} &
+\textbf{NEAL Force} & \textbf{Vanilla Force} \\
+\hline
+
+5 &
+284.73 $\pm$ 65.62 &
+\textbf{281.65 $\pm$ 55.97} &
+\textbf{307.51 $\pm$ 17.62} &
+321.44 $\pm$ 28.19 \\
+
+10 &
+\textbf{153.42 $\pm$ 22.18} &
+191.65 $\pm$ 9.83 &
+\textbf{237.75 $\pm$ 12.65} &
+246.20 $\pm$ 16.29 \\
+
+20 &
+\textbf{100.54 $\pm$ 15.84} &
+126.98 $\pm$ 14.92 &
+\textbf{174.11 $\pm$ 6.18} &
+174.32 $\pm$ 4.32 \\
+
+40 &
+\textbf{68.91 $\pm$ 3.62} &
+73.77 $\pm$ 4.23 &
+\textbf{135.91 $\pm$ 1.33} &
+136.01 $\pm$ 1.91 \\
+\hline
+\end{tabular}
+\caption{Energy and Force MAE (mean ± std) using energy guidance with z\_score of 40 for Carbon and Oxygen atoms outlier detection in aspirin.}
+\end{table*}
+
+
+
+\begin{table*}[htbp]
+\centering
+\begin{tabular}{c|cc|cc}
+\hline
+\textbf{Num Examples} &
+\textbf{NEAL Energy} & \textbf{Vanilla Energy} &
+\textbf{NEAL Force} & \textbf{Vanilla Force} \\
+\hline
+
+5  &
+\textbf{272.99 $\pm$ 68.55} &
+281.65 $\pm$ 55.96 &
+\textbf{303.27 $\pm$ 19.99} &
+321.44 $\pm$ 28.19 \\
+
+10 &
+\textbf{154.16 $\pm$ 20.33} &
+191.67 $\pm$ 9.80 &
+\textbf{232.74 $\pm$ 12.35} &
+246.20 $\pm$ 16.29 \\
+
+20 &
+\textbf{106.48 $\pm$ 12.52} &
+126.97 $\pm$ 14.92 &
+175.31 $\pm$ 4.15 &
+\textbf{174.32 $\pm$ 4.32} \\
+
+40 &
+\textbf{68.87 $\pm$ 2.99} &
+73.76 $\pm$ 4.18 &
+\textbf{135.68 $\pm$ 1.44} &
+136.01 $\pm$ 1.91 \\
+
+\hline
+\end{tabular}
+\caption{Energy and Force MAE (mean ± std) using energy guidance with z\_score of 50 for Carbon and Oxygen atoms outlier detection in aspirin.}
+\end{table*}
+
+
+\subsection{Azobenzene}
+\begin{table*}[htbp]
+\centering
+\begin{tabular}{c|cc|cc}
+\hline
+\textbf{Num Examples} &
+\textbf{NEAL Energy MAE} & \textbf{Vanilla Energy MAE} &
+\textbf{NEAL Force MAE} & \textbf{Vanilla Force MAE} \\
+\hline
+
+5  &
+\textbf{92.82 $\pm$ 17.88} &
+106.67 $\pm$ 15.09 &
+\textbf{169.99 $\pm$ 12.32} &
+179.49 $\pm$ 13.75 \\
+
+10 &
+70.56 $\pm$ 3.03 &
+\textbf{70.03 $\pm$ 7.35} &
+\textbf{145.25 $\pm$ 9.21} &
+145.29 $\pm$ 4.32 \\
+
+20 &
+\textbf{49.47 $\pm$ 8.16} &
+52.16 $\pm$ 9.82 &
+\textbf{109.66 $\pm$ 6.08} &
+115.26 $\pm$ 2.21 \\
+
+40 &
+38.76 $\pm$ 4.35 &
+\textbf{38.27 $\pm$ 2.36} &
+\textbf{85.99 $\pm$ 5.39} &
+89.45 $\pm$ 2.30 \\
+
+\hline
+\end{tabular}
+\caption{Energy and force MAE (mean $\pm$ std) for azobenzene only energy guidance used.}
+\end{table*}
+
+
+
+\begin{table*}[htbp]
+\centering
+\begin{tabular}{c|cc|cc}
+\hline
+\textbf{Num Examples} &
+\textbf{NEAL Energy} & \textbf{Vanilla Energy} &
+\textbf{NEAL Force} & \textbf{Vanilla Force} \\
+\hline
+5  &
+\textbf{90.17 $\pm$ 10.12} &
+106.67 $\pm$ 15.08 &
+\textbf{166.72 $\pm$ 17.54} &
+179.49 $\pm$ 13.75 \\
+10 &
+\textbf{68.27 $\pm$ 4.43} &
+70.03 $\pm$ 7.35 &
+\textbf{141.66 $\pm$ 13.52} &
+145.29 $\pm$ 4.32 \\
+20 &
+\textbf{47.86 $\pm$ 6.08} &
+52.16 $\pm$ 9.81 &
+\textbf{107.06 $\pm$ 9.67} &
+115.26 $\pm$ 2.21 \\
+40 &
+\textbf{37.34 $\pm$ 3.50} &
+38.27 $\pm$ 2.36 &
+\textbf{82.08 $\pm$ 7.87} &
+89.45 $\pm$ 2.30 \\
+\hline
+\end{tabular}
+\caption{Mean $\pm$ standard deviation of energy and force MAE. Energy guidance with nitrogen removed to prevent spurious matches in Azobenzene}
+\end{table*}
+
+
 
 \end{document}

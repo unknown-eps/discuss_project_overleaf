@@ -1,0 +1,84 @@
+\documentclass[12pt]{article}
+
+% Essential packages for mathematics
+\usepackage{amsmath}    % Advanced math environments
+\usepackage{amssymb}    % Additional math symbols
+\usepackage{amsthm}     % Theorem environments
+\usepackage{mathtools}  % Extensions to amsmath
+
+% Algorithm packages
+\usepackage[ruled,vlined]{algorithm2e}  % Popular algorithm package
+% Alternative: \usepackage{algorithm,algpseudocode} % For algorithmicx
+
+% Other useful packages
+\usepackage{graphicx}   % For including figures
+\usepackage{geometry}   % Page layout
+\usepackage{hyperref}   % Hyperlinks
+\usepackage{cleveref}   % Smart cross-referencing
+
+% Page setup
+\geometry{margin=1in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Custom math operators
+\DeclareMathOperator{\argmax}{arg\,max}
+\DeclareMathOperator{\argmin}{arg\,min}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+% Algorithm2e settings
+\SetAlgoNlRelativeSize{0}  % Line numbers same size as text
+\SetAlgoNoLine             % Remove vertical lines (comment to keep them)
+\DontPrintSemicolon        % Don't print semicolons at end of lines
+
+\title{Paper Plan}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section{Paper Organization}
+\textbf{Introduction}
+\begin{enumerate}
+    \item Importance of material discovery and the role of ML in the field.
+    \item The trend of training foundation models on large amounts of simulation data.
+    \item Foundation models and the need for fine-tuning to make them usable for unseen material systems.
+    \item Need of data-efficient methods due to the high cost of gathering data from simulations unlike other fields like vision with large amount of data present on the web.
+\end{enumerate}
+
+\textbf{Prototype based alignment}
+\begin{enumerate}
+    \item Explain how our method works by clustering similar local neighborhoods together.
+    \item Explain why it works from a physics perspective similar neighborhoods should have similar outcomes.
+    \item Explain why it works from an ML perspective a bias var tradeoff.
+\end{enumerate}
+\textbf{Experimental Setup}
+\begin{enumerate}
+    \item Explain our experimental setup, including k-fold cross validation, hyper-parameter tuning etc.
+    \item Prototype Extraction via PCA.
+    \item Further ablations with force based guidance and schnet with modified architecture can be discussed.
+\end{enumerate}
+\textbf{Results}
+
+\section{Datasets}
+\textbf{MD22 dataset}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\linewidth]{plots/md22_dataset.png}
+    \caption{MD22 dataset}
+    \label{fig:placeholder}
+\end{figure}
+\end{document}
