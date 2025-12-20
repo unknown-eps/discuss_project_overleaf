@@ -5,6 +5,7 @@
 \usepackage{amssymb}    % Additional math symbols
 \usepackage{amsthm}     % Theorem environments
 \usepackage{mathtools}  % Extensions to amsmath
+\usepackage{tabularx}
 
 % Algorithm packages
 \usepackage[ruled,vlined]{algorithm2e}  % Popular algorithm package
@@ -691,8 +692,8 @@ The improvement in Force MAE is only at budget of 10 examples but energy mae is 
 \begin{tabular}{c|cc|cc}
 \hline
 \textbf{Num Examples} &
-\textbf{NEAL Energy MAE} & \textbf{Vanilla Energy MAE} &
-\textbf{NEAL Force MAE} & \textbf{Vanilla Force MAE} \\
+\textbf{NEAL Energy } & \textbf{Vanilla Energy } &
+\textbf{NEAL Force } & \textbf{Vanilla Force} \\
 \hline
 
 5  &
@@ -771,6 +772,55 @@ The improvement in Force MAE is only at budget of 10 examples but energy mae is 
     \centering
     \includegraphics[width=0.5\linewidth]{Comparison of Force mae across different training methods for azobenzene.png}
     \caption{Comparison of Force MAE for azobenzene}
+    \label{fig:placeholder}
+\end{figure}
+
+\newpage
+
+\section{Bootstrapping via synthetic data generation.}
+\subsection{Methodology}
+We use the trained models to generate additional data for further training of the models.
+\begin{enumerate}
+    \item We repeat this for each random seed.
+    \item We have trained multiple hyper-parameter configurations for each random seed.
+    \item We first find the best 5 model ensemble using the same method in the previous section. (Minimum average error of force + energy on the appropriate validation set.)
+    \item For each model in the ensemble
+    \begin{enumerate}
+        \item Randomly sample configuration from it's training split.
+        \item Perturb these configurations.
+        \item Use the 5 model ensemble to label this ensemble with energy and forces.
+    \end{enumerate}
+    \item Note that the synthetic data for each model generated in the ensemble is different.
+\end{enumerate}
+
+% Add this to your preamble
+% Defines a new column type 'Y' that is centered and allows text wrapping
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\begin{table*}[htbp!]
+\centering
+% Set width to \linewidth (or \textwidth) and use Y columns for data
+\begin{tabularx}{\linewidth}{c|YY|YY}
+\hline
+\textbf{N} &
+\textbf{NEAL+AUG Energy} & \textbf{Vanilla+AUG Energy} &
+\textbf{NEAL+AUG Force} & \textbf{Vanilla+AUG Force} \\
+\hline
+5  & \textbf{249.49 $\pm$ 82.67} & 263.66 $\pm$ 56.44 & \textbf{307.73 $\pm$ 19.90} & 309.61 $\pm$ 22.01 \\
+10 & \textbf{138.70 $\pm$ 13.92} & 166.86 $\pm$ 18.60 & 229.73 $\pm$ 5.59 & \textbf{227.70 $\pm$ 3.48} \\
+20 & \textbf{96.38 $\pm$ 7.52} & 118.56 $\pm$ 13.90 & 176.05 $\pm$ 1.38 & \textbf{173.48 $\pm$ 2.56} \\
+40 & \textbf{68.46 $\pm$ 7.91} & 72.30 $\pm$ 7.55 & 133.04 $\pm$ 1.95 & \textbf{132.86 $\pm$ 2.17} \\
+\hline
+\end{tabularx}
+\caption{Mean $\pm$ standard deviation of energy and force MAE. Lowest values are in bold.Synthetic examples were generated to ensure a 50\% ratio of training and synthetic examples. The perturbations were sampled from a normal distribution with std 0.01}
+\end{table*}
+We can observe that using the neal method we show better performance even after using augmentation for continued training of the system.
+
+\newpage
+\begin{figure}[htbp!]
+    \centering
+    \includegraphics[width=0.5\linewidth]{plots/augmentation comparision aspirin scale 0.01 both energy and forces.png}
+    \caption{Comparison of synthetic data generation based continued training with normal training methods.}
     \label{fig:placeholder}
 \end{figure}
 \end{document}
