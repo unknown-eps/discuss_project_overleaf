@@ -823,4 +823,70 @@ We can observe that using the neal method we show better performance even after 
     \caption{Comparison of synthetic data generation based continued training with normal training methods.}
     \label{fig:placeholder}
 \end{figure}
+
+\section{Result Tables}
+\begin{table*}[htbp]
+\centering
+\begin{tabular}{c|cc|cc}
+\hline
+\textbf{Num Examples} &
+\textbf{NEAL Energy} & \textbf{Vanilla Energy} &
+\textbf{NEAL Force} & \textbf{Vanilla Force} \\
+\hline
+5  &
+\textbf{33.75 $\pm$ 6.23} & 33.83 $\pm$ 7.47 &
+106.12 $\pm$ 3.75 & \textbf{101.91 $\pm$ 2.51} \\
+\hline
+10 &
+\textbf{22.89 $\pm$ 2.08} & 24.74 $\pm$ 5.24 &
+82.50 $\pm$ 3.25 & \textbf{81.00 $\pm$ 3.83} \\
+\hline
+20 &
+\textbf{17.43 $\pm$ 0.96} & 17.53 $\pm$ 0.84 &
+\textbf{65.67 $\pm$ 1.71} & 66.32 $\pm$ 2.04 \\
+\hline
+40 &
+\textbf{12.57 $\pm$ 0.68} & 13.27 $\pm$ 1.68 &
+\textbf{47.31 $\pm$ 1.05} & 49.74 $\pm$ 2.09 \\
+\hline
+\end{tabular}
+\caption{Energy and Force MAE (mean $\pm$ std) for \textbf{toluene} 3rd interaction layer with all energy latents energy based guidance.}
+\end{table*}
+
+\begin{table*}[htbp!]
+\centering
+\begin{tabular}{c|cc|cc}
+\hline
+\textbf{Num Examples} &
+\textbf{NEAL Energy} & \textbf{Vanilla Energy} &
+\textbf{NEAL Force} & \textbf{Vanilla Force} \\
+\hline
+5  &
+113.89 $\pm$ 20.76 &
+\textbf{110.69 $\pm$ 19.78} &
+299.02 $\pm$ 7.99 &
+\textbf{296.45 $\pm$ 12.54} \\
+
+10 &
+\textbf{84.06 $\pm$ 12.83} &
+92.36 $\pm$ 14.32 &
+231.28 $\pm$ 9.36 &
+\textbf{229.65 $\pm$ 15.20} \\
+
+20 &
+\textbf{67.60 $\pm$ 11.35} &
+72.20 $\pm$ 8.46 &
+173.35 $\pm$ 2.64 &
+\textbf{173.30 $\pm$ 4.42} \\
+
+40 &
+\textbf{40.13 $\pm$ 3.84} &
+44.51 $\pm$ 6.27 &
+135.32 $\pm$ 5.28 &
+\textbf{134.94 $\pm$ 3.82} \\
+\hline
+\end{tabular}
+\caption{Energy and Force MAE (mean $\pm$ std) for \textbf{malonaldehyde} 3rd interaction layer with all energy latents energy based guidance.}
+\end{table*}
+
 \end{document}
